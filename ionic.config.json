@@ -1,0 +1,7 @@
+{
+  "name": "Crypto Calculator",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

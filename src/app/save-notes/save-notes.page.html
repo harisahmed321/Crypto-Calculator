@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Profile Overview
+      <div style="flex: auto; flex-direction: row">
+        <ion-note class="ion-margin-end">
+          Profit <strong> {{totalProfit || 0 | currency}}</strong>
+        </ion-note>
+        <ion-note
+          >Net Profit
+          <strong>
+            <ion-note [color]="totalNetProfit > 0? 'success' : 'danger'"
+              >{{totalNetProfit || 0 | currency }}</ion-note
+            >
+            <span> || </span>
+            <ion-note [color]="totalPercentage > 0? 'success' : 'danger'"
+              >{{totalPercentage || 0 | number: '2.2' }}%</ion-note
+            >
+          </strong></ion-note
+        >
+      </div>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="searchNote"
+      (ionChange)="onFilter()"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="calculateValues.length > 0">
+    <ion-item-sliding *ngFor="let opt of calculateValues">
+      <ion-item>
+        <ion-label>
+          <h2 class="ion-text-uppercase">
+            {{opt.pairs || '-'}}
+            <ion-note class="ion-float-right">
+              {{opt.createdAt | date: 'dd/MM/YYYY hh:mm a'}}</ion-note
+            >
+          </h2>
+          <ion-row>
+            <ion-col size="6">
+              <h4>
+                Buy Zone
+                <ion-note class="ion-float-right"
+                  >{{opt.buyAt | currency }}</ion-note
+                >
+                <br />
+                Sell Zone
+                <ion-note class="ion-float-right"
+                  >{{opt.sellAt | currency }}</ion-note
+                >
+                <br />
+                Bought Amount
+                <ion-note class="ion-float-right"
+                  >{{opt.buyAmount | currency}}</ion-note
+                >
+                <br />
+                Unit
+                <ion-note class="ion-float-right"
+                  >{{opt.totalUnit | number: '2.2'}}</ion-note
+                >
+              </h4>
+            </ion-col>
+            <ion-col size="6">
+              <h4>
+                Profit
+                <ion-note class="ion-float-right"
+                  >{{opt.totalProfitCost | currency }}</ion-note
+                >
+                <br />
+                Net Profit
+                <strong>
+                  <ion-note
+                    class="ion-float-right"
+                    [color]="opt.percentage > 0? 'success' : 'danger'"
+                    >{{opt.netProfit | currency }}</ion-note
+                  >
+                </strong>
+                <br />
+                Percentage
+                <strong>
+                  <ion-note
+                    class="ion-float-right"
+                    [color]="opt.percentage > 0? 'success' : 'danger'"
+                    >{{opt.percentage | number: '2.2'}}%</ion-note
+                  >
+                </strong>
+              </h4>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <!-- <ion-item-option color="secondary"
+          ><ion-icon name="pencil-outline"></ion-icon
+        ></ion-item-option> -->
+        <ion-item-option color="danger" (click)="removeNotes(opt.id)"
+          ><ion-icon name="trash-outline"></ion-icon
+        ></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

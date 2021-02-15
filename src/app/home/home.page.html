@@ -1,0 +1,192 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Welcome </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card
+    [color]="form.controls.percentage.value === 0 || !form.controls.percentage.value ? 'primary': form.controls.percentage.value && form.controls.percentage.value > 0? 'success'  : 'danger'"
+  >
+    <ion-card-header>
+      <ion-card-subtitle>Crypto Calculation Result</ion-card-subtitle>
+      <ion-card-title
+        >Profit
+        <strong class="ion-float-right">
+          {{form.controls.totalProfitCost.value | currency }}
+        </strong>
+        <br />
+        Net Profit
+        <strong class="ion-float-right">
+          {{form.controls.netProfit.value | currency }}
+        </strong>
+        <br />
+        Percentage
+        <strong class="ion-float-right">
+          {{form.controls.percentage.value | number: '2.2'}}%
+        </strong>
+        <br />
+        Unit
+        <strong class="ion-float-right">
+          {{form.controls.totalUnit.value | number: '2.2'}}
+        </strong>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <form [formGroup]="form" (ngSubmit)="onChange()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Buy Zone</ion-label>
+        <ion-input
+          type="number"
+          placeholder="$00.00"
+          formControlName="buyAt"
+          (ionChange)="onChange()"
+        ></ion-input>
+        <span
+          *ngIf="form.controls.buyAt.invalid && (form.controls.buyAt.dirty || form.controls.buyAt.touched)"
+        >
+          <ion-note *ngIf="form.controls.buyAt.errors?.required" color="danger"
+            >Buy zone is required</ion-note
+          >
+          <ion-note *ngIf="form.controls.buyAt.errors?.min" color="danger"
+            >Buy zone minimum value must be greater than or equal to
+            zero</ion-note
+          >
+        </span>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Sell Zone</ion-label>
+        <ion-input
+          type="number"
+          placeholder="$00.00"
+          formControlName="sellAt"
+          (ionChange)="onChange()"
+        ></ion-input>
+        <span
+          *ngIf="form.controls.sellAt.invalid && (form.controls.sellAt.dirty || form.controls.sellAt.touched)"
+        >
+          <ion-note *ngIf="form.controls.sellAt.errors?.required" color="danger"
+            >Sell zone is required</ion-note
+          >
+          <ion-note *ngIf="form.controls.sellAt.errors?.min" color="danger"
+            >Sell zone minimum value must be greater than or equal to
+            zero</ion-note
+          >
+        </span>
+      </ion-item>
+      <ion-row class="ion-no-padding">
+        <!-- bought Amount -->
+        <ion-col class="ion-no-padding">
+          <ion-item *ngIf="!byUnit">
+            <ion-label position="stacked">Bought Amount</ion-label>
+            <ion-input
+              type="number"
+              placeholder="$00.00"
+              formControlName="buyAmount"
+              (ionChange)="onChange()"
+            ></ion-input>
+            <span
+              *ngIf="form.controls.buyAmount.invalid && (form.controls.buyAmount.dirty || form.controls.buyAmount.touched)"
+            >
+              <ion-note
+                *ngIf="form.controls.buyAmount.errors?.required"
+                color="danger"
+                >Bought Amount is required</ion-note
+              >
+              <ion-note
+                *ngIf="form.controls.buyAmount.errors?.min"
+                color="danger"
+                >Bought Amount minimum value must be greater than or equal to
+                zero</ion-note
+              >
+            </span>
+          </ion-item>
+          <!-- By Unit -->
+          <ion-item *ngIf="byUnit">
+            <ion-label position="stacked">Unit</ion-label>
+            <ion-input
+              type="number"
+              placeholder="00.00"
+              formControlName="totalUnit"
+              (ionChange)="onChange()"
+            ></ion-input>
+            <span
+              *ngIf="form.controls.buyAmount.invalid && (form.controls.buyAmount.dirty || form.controls.buyAmount.touched)"
+            >
+              <ion-note
+                *ngIf="form.controls.buyAmount.errors?.required"
+                color="danger"
+                >Buying Amount is required</ion-note
+              >
+              <ion-note
+                *ngIf="form.controls.buyAmount.errors?.min"
+                color="danger"
+                >Buying Amount minimum value must be greater than or equal to
+                zero</ion-note
+              >
+            </span>
+          </ion-item>
+        </ion-col>
+        <!-- by Unit -->
+        <ion-col size="4" class="ion-no-padding">
+          <ion-item>
+            <ion-label position="stacked">By Unit</ion-label>
+            <ion-toggle
+              name="byUnit"
+              [(ngModel)]="byUnit"
+              [ngModelOptions]="{standalone: true}"
+              (ionChange)="onByUnitChange()"
+            ></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-item>
+        <ion-label position="stacked">Pair Name</ion-label>
+        <ion-input
+          type="text"
+          class="ion-text-uppercase"
+          placeholder="BTC/USDT"
+          formControlName="pairs"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Date Time</ion-label>
+        <ion-datetime
+          displayFormat="DD/MM/YYYY hh:mm a"
+          min="2000"
+          [value]="form.controls.createdAt.value"
+          (ionChange)="onDateChange($event)"
+        >
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-row>
+      <ion-col>
+        <ion-button shape="round" color="light" expand="full" (click)="clear()"
+          >Clear</ion-button
+        >
+      </ion-col>
+      <ion-col>
+        <ion-button shape="round" expand="full" type="submit"
+          >Calculate</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button
+          shape="round"
+          expand="full"
+          color="medium"
+          (click)="saveAsNote(form)"
+          >Save As Note</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
