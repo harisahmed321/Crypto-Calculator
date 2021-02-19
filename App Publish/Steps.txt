@@ -1,0 +1,17 @@
+1) ionic cordova build --release android
+
+Create New Certificate
+=> keytool -genkey -v -keystore my-release-key.keystore -alias crypto-cal -keyalg RSA -keysize 2048 -validity 10000
+=> password: user123
+=> keytool -importkeystore -srckeystore my-release-key.keystore -destkeystore my-release-key.keystore -deststoretype pkcs12
+
+If Certificate already created:
+
+=> jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-release-unsigned.apk crypto-cal
+=> goto C:\Users\haris.rajput\AppData\Local\Android\Sdk\build-tools\28.0.3
+=> zipalign -v 4 app-release-unsigned.apk app-release-signed.apk
+
+Play Store Account
+voguetech7@gmail.com
+
+http://admin.wasahyderabad.com/privacy-policy
