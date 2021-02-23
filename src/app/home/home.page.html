@@ -16,22 +16,22 @@
       <ion-card-title
         >Profit
         <strong class="ion-float-right">
-          {{form.controls.totalProfitCost.value | currency }}
+          {{form.controls.totalProfitCost.value || 0 | currency }}
         </strong>
         <br />
         Net Profit
         <strong class="ion-float-right">
-          {{form.controls.netProfit.value | currency }}
+          {{form.controls.netProfit.value || 0 | currency }}
         </strong>
         <br />
         Percentage
         <strong class="ion-float-right">
-          {{form.controls.percentage.value | number: '2.2'}}%
+          {{form.controls.percentage.value || 0 | number: '2.2'}}%
         </strong>
         <br />
         Unit
         <strong class="ion-float-right">
-          {{form.controls.totalUnit.value | number: '2.2'}}
+          {{form.controls.totalUnit.value || 0 | number: '2.2'}}
         </strong>
       </ion-card-title>
     </ion-card-header>
@@ -79,9 +79,10 @@
         </span>
       </ion-item>
       <ion-row class="ion-no-padding">
-        <!-- bought Amount -->
+        <!-- bought Amount & Unit -->
         <ion-col class="ion-no-padding">
-          <ion-item *ngIf="!byUnit">
+          <!-- Bought Amount -->
+          <ion-item *ngIf="!form.controls.byUnit.value">
             <ion-label position="stacked">Bought Amount</ion-label>
             <ion-input
               type="number"
@@ -106,7 +107,7 @@
             </span>
           </ion-item>
           <!-- By Unit -->
-          <ion-item *ngIf="byUnit">
+          <ion-item *ngIf="form.controls.byUnit.value">
             <ion-label position="stacked">Unit</ion-label>
             <ion-input
               type="number"
@@ -131,20 +132,19 @@
             </span>
           </ion-item>
         </ion-col>
-        <!-- by Unit -->
+        <!-- By Unit Toggle -->
         <ion-col size="4" class="ion-no-padding">
           <ion-item>
             <ion-label position="stacked">By Unit</ion-label>
             <ion-toggle
               name="byUnit"
-              [(ngModel)]="byUnit"
-              [ngModelOptions]="{standalone: true}"
+              formControlName="byUnit"
               (ionChange)="onByUnitChange()"
             ></ion-toggle>
           </ion-item>
         </ion-col>
       </ion-row>
-
+      <!-- Pair Name -->
       <ion-item>
         <ion-label position="stacked">Pair Name</ion-label>
         <ion-input

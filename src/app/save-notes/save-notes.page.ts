@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CalculateValue } from '../shared/models/calculate-value.model';
 import { SaveNoteService } from '../shared/services/pages/save-note.service';
 
@@ -14,7 +15,11 @@ export class SaveNotesPage implements OnInit {
   totalProfit: number;
   totalNetProfit: number;
   totalPercentage: number;
-  constructor(private saveNoteService: SaveNoteService) {}
+  constructor(
+    private saveNoteService: SaveNoteService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
     this.saveNoteService.getAll();
     this.saveNoteService.notesSub.subscribe((res) => {
@@ -41,8 +46,13 @@ export class SaveNotesPage implements OnInit {
     });
   }
 
-  async removeNotes(id: string) {
+  async removeNote(id: string) {
     await this.saveNoteService.delete(id);
+  }
+
+  editNote(calculateValue: CalculateValue) {
+    console.log(calculateValue);
+    this.router.navigate(['/tabs/home', calculateValue]);
   }
 
   onFilter() {

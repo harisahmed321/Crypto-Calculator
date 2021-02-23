@@ -30,6 +30,28 @@ export class SaveNoteService {
     this.appToastService.show('Notes Added');
   }
 
+  async update(calculateValue: CalculateValue) {
+    let calculateValues: Array<CalculateValue> = [];
+    const notes = await this.appLocalStorageService.get(notesKey);
+    if (notes && notes.length > 0) {
+      calculateValues = notes;
+      const index = calculateValues.findIndex(
+        (x) => x.id === calculateValue.id
+      );
+      if (index > -1) {
+        calculateValues[index] = calculateValue;
+        this.appLocalStorageService.set(notesKey, calculateValues);
+        this.notesSub.next(calculateValues);
+        this.appToastService.show('Notes Updated');
+      }
+    }
+    // calculateValue.id = uuidv4();
+    // calculateValues = [calculateValue, ...calculateValues];
+    // this.appLocalStorageService.set(notesKey, calculateValues);
+    // this.notesSub.next(calculateValues);
+    // this.appToastService.show('Notes Added');
+  }
+
   async getAll() {
     let calculateValues: Array<CalculateValue> = [];
     const notes = await this.appLocalStorageService.get(notesKey);

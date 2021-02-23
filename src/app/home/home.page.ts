@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalculateValue } from '../shared/models/calculate-value.model';
 import { SaveNoteService } from '../shared/services/pages/save-note.service';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,22 +13,43 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 export class HomePage implements OnInit {
   form: FormGroup;
   calculateValue: CalculateValue = new CalculateValue();
-  byUnit: boolean;
+  // byUnit: boolean;
   constructor(
     private fb: FormBuilder,
     private saveNoteService: SaveNoteService,
-    private datePicker: DatePicker
+    private datePicker: DatePicker,
+    private activatedRoute: ActivatedRoute
   ) {
     this.form = this.fb.group({
+      id: [null],
       buyAt: [null, [Validators.required, Validators.min(0)]],
       sellAt: [null, [Validators.required, Validators.min(0)]],
       buyAmount: [null, [Validators.min(1)]],
+      byUnit: [false],
       totalUnit: [null],
       pairs: [null],
       percentage: [0],
       netProfit: [0],
       totalProfitCost: [0],
       createdAt: [new Date().toISOString()],
+    });
+    this.activatedRoute.params.subscribe((params: CalculateValue) => {
+      console.log(params);
+      if (params.id) {
+        // this.form.setValue(params);
+        this.form.controls.id.setValue(params.id);
+        this.form.controls.buyAt.setValue(params.buyAt);
+        this.form.controls.sellAt.setValue(params.sellAt);
+        this.form.controls.buyAmount.setValue(params.buyAmount);
+        this.form.controls.byUnit.setValue(params.byUnit);
+        this.form.controls.totalUnit.setValue(params.totalUnit);
+        this.form.controls.pairs.setValue(params.pairs);
+        this.form.controls.percentage.setValue(params.percentage);
+        this.form.controls.netProfit.setValue(params.netProfit);
+        this.form.controls.totalProfitCost.setValue(params.totalProfitCost);
+        this.form.controls.createdAt.setValue(params.createdAt);
+        this.onChange();
+      }
     });
   }
   ngOnInit(): void {}
@@ -42,7 +64,7 @@ export class HomePage implements OnInit {
     const sellAt: number = parseFloat(this.form.controls.sellAt.value);
     const buyAmount: number = parseFloat(this.form.controls.buyAmount.value);
     let totalUnit: number = parseFloat(this.form.controls.totalUnit.value);
-    if (!this.byUnit) {
+    if (!this.form.controls.byUnit.value) {
       totalUnit = buyAmount / buyAt;
     }
     const totalProfitCost = totalUnit * sellAt;
@@ -57,16 +79,14 @@ export class HomePage implements OnInit {
   saveAsNote(form: FormGroup) {
     form.markAllAsTouched();
     if (form.valid) {
-      this.calculateValue.buyAt = this.form.controls.buyAt.value;
-      this.calculateValue.sellAt = this.form.controls.sellAt.value;
-      this.calculateValue.buyAmount = this.form.controls.buyAmount.value;
-      this.calculateValue.totalUnit = this.form.controls.totalUnit.value;
-      this.calculateValue.pairs = this.form.controls.pairs.value;
-      this.calculateValue.percentage = this.form.controls.percentage.value;
-      this.calculateValue.netProfit = this.form.controls.netProfit.value;
-      this.calculateValue.totalProfitCost = this.form.controls.totalProfitCost.value;
-      this.calculateValue.createdAt = this.form.controls.createdAt.value;
-      this.saveNoteService.add(this.calculateValue);
+      if (form.value.id) {
+        console.log('updated');
+        this.saveNoteService.update(form.value);
+      } else {
+        console.log('added');
+        this.saveNoteService.add(form.value);
+      }
+      form.reset();
     }
   }
 

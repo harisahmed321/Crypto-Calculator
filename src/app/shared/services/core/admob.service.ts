@@ -13,19 +13,16 @@ import {
 export class AdmobService {
   //BANNER CONFIG
   bannerConfig: AdMobFreeBannerConfig = {
-    isTesting: false, // KEEP DURING CODING, REMOVE AT PROD.
-    autoShow: true, //,
+    autoShow: true,
     id: 'ca-app-pub-9678064810181476/5739104153',
   };
   //INTERSTITIAL CONFIG
   interstitialConfig: AdMobFreeInterstitialConfig = {
-    isTesting: false, // KEEP DURING CODING, REMOVE AT PROD.
     autoShow: true,
     id: 'ca-app-pub-9678064810181476/1553830027',
   };
   //REWARD VIDEO CONFIG.
   RewardVideoConfig: AdMobFreeRewardVideoConfig = {
-    isTesting: false, // KEEP DURING CODING, REMOVE AT PROD.
     autoShow: true, //,
     // id: 'ca-app-pub-9678064810181476~5371987231',
   };
@@ -35,9 +32,9 @@ export class AdmobService {
     //LOAD ADS AT PLATFORM READY PROMISE.
     platform.ready().then(() => {
       //BANNER
-      this.admobFree.banner.config(this.bannerConfig);
+      // this.admobFree.banner.config(this.bannerConfig);
       //INTERSTITIAL
-      this.admobFree.interstitial.config(this.interstitialConfig);
+      // this.admobFree.interstitial.config(this.interstitialConfig);
       // this.admobFree.interstitial
       //   .prepare()
       //   .then(() => {
@@ -45,7 +42,7 @@ export class AdmobService {
       //   })
       //   .catch((e) => console.log('PROBLEM LOADING INTERSTITIAL: ', e));
       // //REWARD VIDEO
-      this.admobFree.rewardVideo.config(this.RewardVideoConfig);
+      // this.admobFree.rewardVideo.config(this.RewardVideoConfig);
       // this.admobFree.rewardVideo
       //   .prepare()
       //   .then(() => {
@@ -56,6 +53,7 @@ export class AdmobService {
   }
 
   ShowBanner() {
+    this.admobFree.banner.config(this.bannerConfig);
     //CHECK AND SHOW BANNER
     this.admobFree.banner
       .prepare()
@@ -66,6 +64,7 @@ export class AdmobService {
   }
 
   ShowInterstitial() {
+    this.admobFree.interstitial.config(this.interstitialConfig);
     //CHECK AND SHOW INTERSTITIAL
     this.admobFree.interstitial
       .isReady()
@@ -82,6 +81,7 @@ export class AdmobService {
   }
 
   ShowRewardVideo() {
+    this.admobFree.rewardVideo.config(this.RewardVideoConfig);
     //CHECK AND SHOW REWARDVIDEO
     this.admobFree.rewardVideo
       .isReady()

@@ -3,6 +3,7 @@ export class CalculateValue {
   buyAt: number;
   sellAt: number;
   buyAmount: number;
+  byUnit: boolean;
   totalUnit: number;
   pairs: string;
   percentage: number;
