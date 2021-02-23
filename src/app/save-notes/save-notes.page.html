@@ -7,17 +7,17 @@
       Profile Overview
       <div style="flex: auto; flex-direction: row">
         <ion-note class="ion-margin-end">
-          Profit <strong> {{totalProfit? totalProfit : 0 | currency}}</strong>
+          Profit <strong> {{totalProfit| currency}}</strong>
         </ion-note>
         <ion-note
           >Net Profit
           <strong>
             <ion-note [color]="totalNetProfit > 0? 'success' : 'danger'"
-              >{{totalNetProfit? totalNetProfit : 0 | currency }}</ion-note
+              >{{totalNetProfit| currency }}</ion-note
             >
             <span> || </span>
             <ion-note [color]="totalPercentage > 0? 'success' : 'danger'"
-              >{{totalPercentage || 0 | number: '2.2' }}%</ion-note
+              >{{totalPercentage | number: '2.2' }}%</ion-note
             >
           </strong></ion-note
         >
@@ -48,22 +48,22 @@
               <h4>
                 Buy Zone
                 <ion-note class="ion-float-right"
-                  >{{opt.buyAt? opt.buyAt : 0 | currency }}</ion-note
+                  >{{opt.buyAt| currency }}</ion-note
                 >
                 <br />
                 Sell Zone
                 <ion-note class="ion-float-right"
-                  >{{opt.sellAt? opt.sellAt : 0 | currency }}</ion-note
+                  >{{opt.sellAt| currency }}</ion-note
                 >
                 <br />
                 Bought Amount
                 <ion-note class="ion-float-right"
-                  >{{opt.buyAmount? opt.buyAmount : 0 | currency}}</ion-note
+                  >{{opt.buyAmount | currency}}</ion-note
                 >
                 <br />
                 Unit
                 <ion-note class="ion-float-right"
-                  >{{opt.totalUnit || 0 | number: '2.2'}}</ion-note
+                  >{{opt.totalUnit | number: '2.2'}}</ion-note
                 >
               </h4>
             </ion-col>
@@ -71,8 +71,7 @@
               <h4>
                 Profit
                 <ion-note class="ion-float-right"
-                  >{{opt.totalProfitCost? opt.totalProfitCost : 0 | currency
-                  }}</ion-note
+                  >{{opt.totalProfitCost | currency }}</ion-note
                 >
                 <br />
                 Net Profit
@@ -80,7 +79,7 @@
                   <ion-note
                     class="ion-float-right"
                     [color]="opt.percentage > 0? 'success' : 'danger'"
-                    >{{opt.netProfit? opt.netProfit : 0 | currency }}</ion-note
+                    >{{opt.netProfit| currency }}</ion-note
                   >
                 </strong>
                 <br />
@@ -89,7 +88,7 @@
                   <ion-note
                     class="ion-float-right"
                     [color]="opt.percentage > 0? 'success' : 'danger'"
-                    >{{opt.percentage || 0 | number: '2.2'}}%</ion-note
+                    >{{opt.percentage | number: '2.2'}}%</ion-note
                   >
                 </strong>
               </h4>

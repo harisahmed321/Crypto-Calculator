@@ -86,12 +86,13 @@ export class HomePage implements OnInit {
         console.log('added');
         this.saveNoteService.add(form.value);
       }
-      form.reset();
+      this.clear();
     }
   }
 
   clear() {
     this.form.reset();
+    this.form.controls.createdAt.setValue(new Date().toISOString());
   }
 
   showDatePicker() {

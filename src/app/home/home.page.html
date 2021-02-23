@@ -16,22 +16,22 @@
       <ion-card-title
         >Profit
         <strong class="ion-float-right">
-          {{form.controls.totalProfitCost.value || 0 | currency }}
+          {{form.controls.totalProfitCost.value | currency }}
         </strong>
         <br />
         Net Profit
         <strong class="ion-float-right">
-          {{form.controls.netProfit.value || 0 | currency }}
+          {{form.controls.netProfit.value | currency }}
         </strong>
         <br />
         Percentage
         <strong class="ion-float-right">
-          {{form.controls.percentage.value || 0 | number: '2.2'}}%
+          {{form.controls.percentage.value | number: '2.2'}}%
         </strong>
         <br />
         Unit
         <strong class="ion-float-right">
-          {{form.controls.totalUnit.value || 0 | number: '2.2'}}
+          {{form.controls.totalUnit.value | number: '2.2'}}
         </strong>
       </ion-card-title>
     </ion-card-header>
