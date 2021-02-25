@@ -7,13 +7,14 @@
       Profile Overview
       <div style="flex: auto; flex-direction: row">
         <ion-note class="ion-margin-end">
-          Profit <strong> {{totalProfit| currency}}</strong>
+          Profit
+          <strong> {{totalProfit| currency: '$' : 'symbol' :'.2-2'}}</strong>
         </ion-note>
         <ion-note
           >Net Profit
           <strong>
             <ion-note [color]="totalNetProfit > 0? 'success' : 'danger'"
-              >{{totalNetProfit| currency }}</ion-note
+              >{{totalNetProfit| currency: '$' : 'symbol' :'.2-2' }}</ion-note
             >
             <span> || </span>
             <ion-note [color]="totalPercentage > 0? 'success' : 'danger'"
@@ -48,17 +49,18 @@
               <h4>
                 Buy Zone
                 <ion-note class="ion-float-right"
-                  >{{opt.buyAt| currency }}</ion-note
+                  >{{opt.buyAt| currency: '$' : 'symbol' :'.2-4' }}</ion-note
                 >
                 <br />
                 Sell Zone
                 <ion-note class="ion-float-right"
-                  >{{opt.sellAt| currency }}</ion-note
+                  >{{opt.sellAt| currency: '$' : 'symbol' :'.2-4' }}</ion-note
                 >
                 <br />
                 Bought Amount
                 <ion-note class="ion-float-right"
-                  >{{opt.buyAmount | currency}}</ion-note
+                  >{{opt.buyAmount | currency: '$' : 'symbol'
+                  :'.2-4'}}</ion-note
                 >
                 <br />
                 Unit
@@ -71,7 +73,8 @@
               <h4>
                 Profit
                 <ion-note class="ion-float-right"
-                  >{{opt.totalProfitCost | currency }}</ion-note
+                  >{{opt.totalProfitCost | currency: '$' : 'symbol' :'.2-2'
+                  }}</ion-note
                 >
                 <br />
                 Net Profit
@@ -79,7 +82,8 @@
                   <ion-note
                     class="ion-float-right"
                     [color]="opt.percentage > 0? 'success' : 'danger'"
-                    >{{opt.netProfit| currency }}</ion-note
+                    >{{opt.netProfit| currency: '$' : 'symbol' :'.2-2'
+                    }}</ion-note
                   >
                 </strong>
                 <br />

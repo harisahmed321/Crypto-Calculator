@@ -1,4 +1,4 @@
-1) ionic cordova build --release android
+1) ionic cordova build android --prod --release
 
 Create New Certificate
 => keytool -genkey -v -keystore my-release-key.keystore -alias crypto-cal -keyalg RSA -keysize 2048 -validity 10000
